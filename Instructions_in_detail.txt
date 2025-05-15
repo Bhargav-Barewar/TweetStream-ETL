@@ -1,0 +1,99 @@
+## Creating EC2 machine
+
+# Open EC2: Go to the EC2 dashboard in AWS.
+# Launch Instance: Click Launch Instance.
+# Name Instance: Name it (e.g., twitter_etl_project).
+# Select OS: Choose the OS (e.g., Ubuntu).
+# Choose Instance Type: Select t2.micro (free) or t3.medium (paid).
+# Create Key Pair: Click Create Key Pair, name it (e.g., airflow_ec2_key), then click Create and download the key.
+# Allow HTTPS/HTTP: Ensure HTTPS and HTTP are allowed in security settings.
+# Launch Instance: Click Launch Instance to start your EC2 instance.
+
+## SETUP EC2 machine
+
+# Select EC2 Instance: Choose your created instance.
+# Connect to Instance: Click Connect and copy the SSH command.
+# Connect via SSH: Paste the SSH command in your local terminal to connect
+## Run these commands on the EC2 instance :
+# sudo apt-get update
+# sudo apt install python3-pip
+# sudo pip install apache-airflow
+# sudo pip install pandas
+# sudo pip install s3fs
+# sudo pip install tweepy
+
+## Giving access to ec2 to s3 using IAM Role with Permissions (Recommended)
+
+# Go to EC2 Dashboard: Open AWS Console, navigate to EC2.
+# Select EC2 Instance: Choose the instance you want to assign the IAM role to.
+# Modify IAM Role: In Actions → Security, select Modify IAM Role.
+# Create New IAM Role: Choose AWS Service, then EC2, and click Next.
+# Assign Permissions: Attach S3FullAccess (and EC2 permissions if needed).
+# Name and Create Role: Name the role (e.g., ec2_s3_role) and click Create.
+# Assign Role to EC2: Select the new role for the EC2 instance and click Update IAM Role.
+
+
+## Creating S3 bucket
+
+# Open S3: Go to the S3 dashboard in AWS.
+# Create Bucket: Click Create bucket.
+# Name the Bucket: Enter a unique name for the bucket.
+# Create: Click Create bucket to finish.
+
+## setup project files on EC2:
+
+# Open Terminal: Paste the EC2 SSH command to connect.
+## Commands on EC2:
+# cd airflow
+# sudo nano airflow.cfg
+# Edit dag_folder to -//-/airflow/twitter_dags
+# Press Ctrl+X, then Y to save.
+# mkdir twitter_dags
+# cd twitter_dags
+# sudo nano dag.py
+# Paste your DAG code, then Ctrl+X → Y to save.
+# sudo nano etl_function.py
+# Paste your ETL code, then Ctrl+X → Y to save.
+
+## Running Airflow Standalone & Getting Login Credentials
+
+# In EC2 Terminal 
+## command :
+# airflow standalone
+# Copy the username & password shown in the terminal to log in to the Airflow web UI.
+
+(access airflow ui from anywhere)
+## Accessing Airflow Web UI from Browser which is running in EC2  
+
+# Go to EC2 Dashboard → Click on your running instance → Click the Instance ID.
+# Scroll to "Security" → Click Edit Inbound Rules.
+## Add Rule:
+# Type: All traffic
+# Source: Anywhere (IPv4)
+# Click Save rules.
+# Get Public DNS: Copy the Public DNS of your instance.
+# Open in Browser:
+# Go to http://<Public-DNS>:8080 to access Airflow.
+# Login: Use the username and password shown after airflow standalone.
+
+(access airflow ui from our ip only)
+## Accessing Airflow Web UI from Browser which is running in EC2
+
+# Go to EC2 Dashboard → Click on your running instance → Click the Instance ID.
+# Scroll to “Security” → Click Edit Inbound Rules.
+## Add Rule:
+# Type: Custom TCP
+# Port range: 8080
+# Source: <Your‑Public‑IP>/32 (replace with your IPv4 address plus /32)
+# Click Save rules.
+# Get Public DNS: Copy the Public DNS of your instance
+# Open in Browser:
+# Go to http://<Public‑DNS>:8080 to access Airflow
+# Login: Use the username and password shown after running airflow standalone
+
+## To stop the airflow server (ctrl+c)
+
+# In EC2 Terminal 
+# Ctrl+c (to stop)
+
+## now we can run dag

@@ -1,0 +1,16 @@
+1) Terminate the EC2 instance
+
+Goes to EC2 → Instances → select your instance → Instance state → Terminate
+
+This automatically deletes the root EBS volume.
+
+2) Release any Elastic IPs
+
+Go to EC2 → Network & Security → Elastic IPs → select the IP(s) → Actions → Release Elastic IP address
+
+3) Empty & delete your S3 buckets
+
+In S3 → Buckets → select each bucket → Empty → once empty, Delete bucket
+
+
+-- after done this steps aws will cost us zero
