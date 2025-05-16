@@ -1,6 +1,6 @@
 
 # 🐦 Twitter ETL Pipeline with Airflow & AWS
-![screenshot](https://drive.google.com/file/d/1rJk_hhDOqyQQ4CEZd_iQ0MvzD8qZeVtH/view?usp=sharing)
+![screenshot](https://github.com/Bhargav-Barewar/TweetStream-ETL/blob/main/twitter_etl_workflow.png)
 
 This project is a simple ETL (Extract, Transform, Load) pipeline that extracts tweets from Twitter using the Tweepy API, transforms the data using Pandas, and loads it into an Amazon S3 bucket. Apache Airflow is used for workflow orchestration, and the whole pipeline runs on an AWS EC2 instance.
 
